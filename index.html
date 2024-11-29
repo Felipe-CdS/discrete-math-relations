@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Relations</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script type="text/javascript" src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
+	<link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+
+<body class="w-screen h-screen flex relative flex-col bg-[#0F0F0F] overflow-hidden text-white">
+
+
+	<div
+		class="flex absolute top-1/2 z-10 flex-col p-5 space-y-3 text-2xl font-bold text-black bg-white rounded-r-xl -translate-y-1/2">
+		<span id="reflexive-ui" class="text-red-500 border-2 border-red-800"> R </span>
+		<span id="antireflexive-ui" class="text-red-500 border-2 border-red-800"> A </span>
+		<span id="symmetric-ui" class="text-red-500 border-2 border-red-800"> S </span>
+		<span id="antisymmetric-ui" class="text-red-500 border-2 border-red-800"> A </span>
+		<span id="transitive-ui" class="text-red-500 border-2 border-red-800">T </span>
+	</div>
+
+	<div
+		class="flex absolute left-1/2 z-10 flex-col items-center py-2 px-5 mt-3 space-y-2 text-2xl text-black bg-white rounded-xl -translate-x-1/2">
+		<div class="flex space-x-5">
+			<button id="pan-button" class="p-1.5 rounded-md border-black hover:border-2 group size-10"
+				onclick="panMode()">
+				<img class="w-full" src="assets/hand-stop.svg" />
+			</button>
+			<button id="new-node-button" class="p-1.5 rounded-md border-black hover:border-2 group size-10"
+				onclick="newNodeMode()">
+				<img class="w-full" src="assets/circle-plus.svg" />
+			</button>
+			<button id="new-edge-button" class="p-1.5 rounded-md border-black hover:border-2 group size-10"
+				onclick="addNewEdge()">
+				<img class="w-full" src="assets/arrow-guide.svg" />
+			</button>
+			<button id="delete-one-button"
+				class="p-1.5 rounded-md border-black hover:border-2 group size-10"
+				onclick="deleteOneMode()">
+				<img class="w-full" src="assets/location-x.svg" />
+			</button>
+
+			<button id="delete-all-button"
+				class="p-1.5 rounded-md border-black hover:border-2 group size-10"
+				onclick="deleteAll()">
+				<img class="w-full" src="assets/trash.svg" />
+			</button>
+		</div>
+	</div>
+
+	<div class="flex absolute right-5 bottom-5 z-10 flex-col p-3 space-y-3 text-sm text-black bg-white rounded-xl">
+		<span id="msg-span"> Clique em qualquer lugar para adicionar um novo nó. </span>
+	</div>
+	<div class="w-full h-full" id="mynetwork"></div>
+	<script src="./index.js"></script>
+	<script src="./matrix.js"></script>
+</body>
+
+</html>
