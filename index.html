@@ -16,18 +16,20 @@
 
 
 	<div
-		class="flex absolute top-1/2 z-10 flex-col p-5 space-y-3 text-2xl font-bold text-black bg-white rounded-r-xl -translate-y-1/2">
-		<span id="reflexive-ui" class="text-red-500 border-2 border-red-800"> R </span>
-		<span id="antireflexive-ui" class="text-red-500 border-2 border-red-800"> A </span>
-		<span id="symmetric-ui" class="text-red-500 border-2 border-red-800"> S </span>
-		<span id="antisymmetric-ui" class="text-red-500 border-2 border-red-800"> A </span>
-		<span id="transitive-ui" class="text-red-500 border-2 border-red-800">T </span>
+		class="flex absolute bottom-0 left-1/2 z-10 flex-row justify-center justify-between items-center p-3 px-5 w-11/12 text-2xl font-bold text-black bg-white rounded-t-xl -translate-x-1/2 md:space-x-5 md:w-fit">
+
+		<img id="r-ui" class="size-10 false-prop" src="assets/r-2.svg" />
+		<img id="ar-ui" class="size-10 false-prop" src="assets/a-2.svg" />
+		<img id="s-ui" class="size-10 false-prop" src="assets/s-2.svg" />
+		<img id="as-ui" class="size-10 false-prop" src="assets/a-2.svg" />
+		<img id="t-ui" class="size-10 false-prop" src="assets/t-2.svg" />
 	</div>
 
 	<div
-		class="flex absolute left-1/2 z-10 flex-col items-center py-2 px-5 mt-3 space-y-2 text-2xl text-black bg-white rounded-xl -translate-x-1/2">
+		class="flex absolute left-1/2 z-20 flex-col items-center py-2 px-5 mt-3 space-y-2 w-11/12 text-2xl text-black bg-white rounded-xl -translate-x-1/2 md:max-w-md drop-shadow-md">
 		<div class="flex space-x-5">
-			<button id="pan-button" class="p-1.5 rounded-md border-black hover:border-2 group size-10"
+			<button id="pan-button"
+				class="p-1.5 rounded-md border-black hover:border-2 selected-button group size-10"
 				onclick="panMode()">
 				<img class="w-full" src="assets/hand-stop.svg" />
 			</button>
@@ -53,8 +55,9 @@
 		</div>
 	</div>
 
-	<div class="flex absolute right-5 bottom-5 z-10 flex-col p-3 space-y-3 text-sm text-black bg-white rounded-xl">
-		<span id="msg-span"> Clique em qualquer lugar para adicionar um novo nó. </span>
+	<div
+		class="absolute top-[calc(4rem-8px)] left-1/2 z-10 flex-col p-3 pt-5 w-11/12 bg-gray-200 rounded-b-xl -translate-x-1/2 md:max-w-md">
+		<p class="w-full text-sm text-center text-black" id="msg-span"></p>
 	</div>
 	<div class="w-full h-full" id="mynetwork"></div>
 	<script src="./index.js"></script>

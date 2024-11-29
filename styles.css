@@ -18,3 +18,11 @@ body {
 	border-width: 2px !important;
 	border-color: #065F46 !important;
 }
+
+.false-prop {
+	filter: invert(12%) sepia(97%) saturate(5136%) hue-rotate(353deg) brightness(89%) contrast(99%) !important;
+}
+
+.true-prop {
+	filter: invert(70%) sepia(42%) saturate(5559%) hue-rotate(82deg) brightness(101%) contrast(83%) !important;
+}

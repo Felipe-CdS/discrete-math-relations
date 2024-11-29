@@ -40,9 +40,9 @@ var options = {
       }
       toggleMatrixEdge(edgeData.from, edgeData.to);
       calcNewMatrixState();
-      changeMsgSpan("pan");
       updateStatesUI();
       callback(edgeData);
+      network.addEdgeMode();
     },
   },
 };
@@ -55,7 +55,7 @@ function newNodeMode() {
 
 function addNewEdge() {
   changeMsgSpan("addEdge");
-  network.manipulation.addEdgeMode();
+  network.addEdgeMode();
 }
 
 function deleteOneMode() {
@@ -69,6 +69,22 @@ function deleteAll() {
   for (let i = 65; i < 91; i++) labelNames.push(i);
 
   network.setData({ nodes, edges });
+
+  states = {
+    reflexive: true,
+    antireflexive: true,
+    symmetric: true,
+    antisymmetric: true,
+    transitive: true,
+  };
+
+  matrix = [];
+  columnsIds = [];
+  labelNames = [];
+
+  for (let i = 65; i < 91; i++) labelNames.push(i);
+  calcNewMatrixState();
+  updateStatesUI();
 }
 
 function panMode() {
@@ -93,15 +109,14 @@ function changeMsgSpan(newMode) {
     case "pan":
       mode = "pan";
       document.getElementById("pan-button").classList.add("selected-button");
-      span.innerHTML = "Clique em qualquer lugar para adicionar um novo nó.";
+      span.innerHTML = "Arraste para mover a tela.";
       break;
     case "addNode":
       mode = "addNode";
       document
         .getElementById("new-node-button")
         .classList.toggle("selected-button");
-      span.innerHTML =
-        "Clique em qualquer lugar para adicionar um novo vértice.";
+      span.innerHTML = "Clique para adicionar um novo vértice.";
       break;
     case "addEdge":
       mode = "addEdge";
@@ -109,7 +124,7 @@ function changeMsgSpan(newMode) {
         .getElementById("new-edge-button")
         .classList.toggle("selected-button");
       span.innerHTML =
-        "Arraste o cursor de um vértice até o outro para criar uma relação.";
+        "Arraste o cursor de um vértice até o outro para criar uma relação. Clique em um vértice para adicionar uma auto-relação.";
       break;
 
     case "deleteOne":
@@ -117,7 +132,7 @@ function changeMsgSpan(newMode) {
       document
         .getElementById("delete-one-button")
         .classList.toggle("selected-button");
-      span.innerHTML = "Clique em qualquer item para deletar.";
+      span.innerHTML = "Clique em qualquer vértice ou ligação para deletá-la.";
       break;
   }
 }
@@ -174,19 +189,15 @@ network.on("select", function () {
 });
 
 function updateStatesUI() {
-  console.log(states);
   if (states.reflexive) {
-    document.getElementById("reflexive-ui").classList.add("true-property");
+    document.getElementById("r-ui").classList.add("true-prop");
   } else {
-    document.getElementById("reflexive-ui").classList.remove("true-property");
+    document.getElementById("r-ui").classList.remove("true-prop");
   }
 
   if (states.antireflexive) {
-    console.log("~!!!!");
-    document.getElementById("antireflexive-ui").classList.add("true-property");
+    document.getElementById("ar-ui").classList.add("true-prop");
   } else {
-    document
-      .getElementById("antireflexive-ui")
-      .classList.remove("true-property");
+    document.getElementById("ar-ui").classList.remove("true-prop");
   }
 }
