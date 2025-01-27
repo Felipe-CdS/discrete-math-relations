@@ -45,6 +45,11 @@ function addNewMatrixEdge(fromId, toId) {
   matrix[yIdx].values[xIdx] = 1;
 }
 
+function deleteMatrixNode(id) {
+  columnsIds = columnsIds.filter((columnId) => columnId != id);
+  matrix = matrix.filter((line) => line.id != id);
+}
+
 function toggleMatrixEdge(fromId, toId) {
   let yIdx = "";
   let xIdx = "";
@@ -63,12 +68,19 @@ function toggleMatrixEdge(fromId, toId) {
     }
   }
 
-  matrix[yIdx].values[xIdx] = !matrix[yIdx].values[xIdx];
+  if (matrix[yIdx].values[xIdx] == 0) {
+    matrix[yIdx].values[xIdx] = 1;
+  } else {
+    matrix[yIdx].values[xIdx] = 0;
+  }
 }
 
 function calcNewMatrixState() {
   let reflexiveCalc = true;
   let antireflexiveCalc = true;
+
+  let symmetricCalc = true;
+  let antisymmetricCalc = true;
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix.length; j++) {
@@ -79,11 +91,21 @@ function calcNewMatrixState() {
       if (i == j && matrix[i].values[j] != 0) {
         antireflexiveCalc = false;
       }
+
+      if (i != j && matrix[i].values[j] == 1 && matrix[j].values[i] == 1) {
+        antisymmetricCalc = false;
+      }
+
+      if (i != j && matrix[i].values[j] == 1 && matrix[j].values[i] == 0) {
+        symmetricCalc = false;
+      }
     }
   }
 
   states.reflexive = reflexiveCalc;
   states.antireflexive = antireflexiveCalc;
+  states.symmetric = symmetricCalc;
+  states.antisymmetric = antisymmetricCalc;
 }
 
 for (let i = 65; i < 91; i++) labelNames.push(i);

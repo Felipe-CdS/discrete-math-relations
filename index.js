@@ -16,7 +16,7 @@ var options = {
     size: 10,
   },
   physics: {
-    enabled: true,
+    enabled: false,
   },
   configure: {
     enabled: false,
@@ -62,6 +62,10 @@ function deleteOneMode() {
   changeMsgSpan("deleteOne");
 }
 
+function confirmDeleteAll() {
+  changeMsgSpan("confirmDeleteAll");
+}
+
 function deleteAll() {
   nodes = new vis.DataSet([]);
   edges = new vis.DataSet([]);
@@ -85,6 +89,7 @@ function deleteAll() {
   for (let i = 65; i < 91; i++) labelNames.push(i);
   calcNewMatrixState();
   updateStatesUI();
+  panMode();
 }
 
 function panMode() {
@@ -94,45 +99,53 @@ function panMode() {
 
 function changeMsgSpan(newMode) {
   let span = document.getElementById("msg-span");
-  document.getElementById("pan-button").classList.remove("selected-button");
-  document
-    .getElementById("new-node-button")
-    .classList.remove("selected-button");
-  document
-    .getElementById("new-edge-button")
-    .classList.remove("selected-button");
-  document
-    .getElementById("delete-one-button")
-    .classList.remove("selected-button");
+
+  document.getElementById("delete-confirm").classList.add("hidden");
+
+  let menuButtons = document.getElementsByClassName("menu-button");
+
+  for (let i = 0; i < menuButtons.length; i++) {
+    menuButtons[i].classList.remove("selected-button");
+  }
+
+  mode = newMode;
 
   switch (newMode) {
     case "pan":
-      mode = "pan";
       document.getElementById("pan-button").classList.add("selected-button");
-      span.innerHTML = "Arraste para mover a tela.";
+      span.innerHTML =
+        "Arraste para mover a tela ou selecione um vértice para movê-lo.";
       break;
+
     case "addNode":
-      mode = "addNode";
       document
         .getElementById("new-node-button")
         .classList.toggle("selected-button");
       span.innerHTML = "Clique para adicionar um novo vértice.";
       break;
+
     case "addEdge":
-      mode = "addEdge";
       document
         .getElementById("new-edge-button")
         .classList.toggle("selected-button");
       span.innerHTML =
-        "Arraste o cursor de um vértice até o outro para criar uma relação. Clique em um vértice para adicionar uma auto-relação.";
+        "Arraste o cursor de um vértice até o outro para criar uma aresta. Clique em um vértice para adicionar uma auto-relação.";
       break;
 
     case "deleteOne":
-      mode = "deleteOne";
       document
         .getElementById("delete-one-button")
         .classList.toggle("selected-button");
-      span.innerHTML = "Clique em qualquer vértice ou ligação para deletá-la.";
+      span.innerHTML = "Clique em qualquer vértice ou aresta para deletá-la.";
+      break;
+
+    case "confirmDeleteAll":
+      document
+        .getElementById("delete-all-button")
+        .classList.toggle("selected-button");
+      document.getElementById("delete-confirm").classList.remove("hidden");
+      span.innerHTML =
+        "Tem certeza que deseja excluir todos os vértices e arestas?";
       break;
   }
 }
@@ -180,6 +193,7 @@ network.on("select", function () {
       let toBeDeleted = network.body.nodes[selection.nodes[0]];
       labelNames.push(toBeDeleted.options.label.charCodeAt(0));
       labelNames.sort();
+      deleteMatrixNode(toBeDeleted.id);
     }
 
     network.deleteSelected();
@@ -199,5 +213,17 @@ function updateStatesUI() {
     document.getElementById("ar-ui").classList.add("true-prop");
   } else {
     document.getElementById("ar-ui").classList.remove("true-prop");
+  }
+
+  if (states.symmetric) {
+    document.getElementById("s-ui").classList.add("true-prop");
+  } else {
+    document.getElementById("s-ui").classList.remove("true-prop");
+  }
+
+  if (states.antisymmetric) {
+    document.getElementById("as-ui").classList.add("true-prop");
+  } else {
+    document.getElementById("as-ui").classList.remove("true-prop");
   }
 }
